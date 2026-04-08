@@ -12,3 +12,17 @@ print(integers)
 
 strings = tokenizer.decode(integers)
 print(strings)
+
+
+# Exercise 2.1
+
+unknownword = "Akwirw ier"
+
+ids = tokenizer.encode(unknownword)
+print("Token ids -> ", ids)
+
+for i in ids:
+    print(i , " -> ", tokenizer.decode([i]))
+
+tokens = tokenizer.decode(ids)
+print("text -> ", tokens)
