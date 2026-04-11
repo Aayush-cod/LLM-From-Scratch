@@ -44,4 +44,17 @@ print("\nAttn_weight: ", attn_weights_2_tmp)
 print("\nAttention_weight_sum: ", attn_weights_2_tmp.sum())
 
 
+# Context Vector calculation code for query 2 or 0,1 = 'journey'
+
+query = inputs[1]
+
+context_vector_2 = torch.zeros(query.shape)
+
+for i, x_i in enumerate(inputs):
+    context_vector_2 += attn_weights_2[i] * x_i
+
+print("\nContextVector_2: ", context_vector_2)
+
+
+
 
