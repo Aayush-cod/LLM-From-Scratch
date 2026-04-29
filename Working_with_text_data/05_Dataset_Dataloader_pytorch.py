@@ -11,6 +11,19 @@ class GPTDatasetV1(Dataset):
 
         tokenids = tokenizer.encode(txt, allowed_special = {"<|endoftext|>"})
 
+        # range(start, stop, step), step → how much to jump each time, Why len(tokenids) - max_length?
+        # Because inside the loop we do:
+
+        # Python
+
+        # input_chunk = tokenids[i : i + max_length]
+        # If i becomes too large, i + max_length would go past the list.
+
+        # So we stop early to avoid overflow.
+
+
+        
+
         for i  in range(0, len(tokenids)- max_length, stride):
             input_chunk = tokenids[i : i + max_length]
             target_chunk = tokenids[i+1 : i + max_length+1]
@@ -54,6 +67,7 @@ data_iter = iter(dataloader)
 
 first_batch = next(data_iter)
 
+# First batch of input target pairs
 print("Firstbatch:\n",first_batch)
 
 
@@ -66,6 +80,8 @@ dataloader = create_dataloader_v1 (
 
 data_iter = iter(dataloader)
 input, target = next(data_iter)
+
+# 8 batch of input and tragets
 
 print("Input:\n", input)
 print("target:\n", target)

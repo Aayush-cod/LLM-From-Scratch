@@ -46,6 +46,7 @@ def create_dataloader_v1(txt, batch_size = 4, max_length=256, stride = 128, shuf
 with open("Working_with_text_data/the-verdict.txt", "r", encoding= "utf-8")as f:
     raw_txt = f.read()
 
+# No of word or token per tensor array
 max_length = 4
 
 dataloader = create_dataloader_v1 ( 
@@ -69,6 +70,8 @@ token_embeddding_layer = torch.nn.Embedding(vocab_size, output_dim)
 
 token_embedding = token_embeddding_layer(input)
 
+# print(token_embedding)
+
 print(token_embedding.shape)
 
 # Positional embedding layer for each token embedding or vector
@@ -77,6 +80,7 @@ positional_embedding_layer = torch.nn.Embedding(context_length, output_dim)
 positonal_embedding = positional_embedding_layer(torch.arange(context_length))
 
 print(positonal_embedding.shape)
+# print(positonal_embedding)
 
 
 # Input embeddings to feed  LLMs
@@ -84,6 +88,7 @@ print(positonal_embedding.shape)
 input_embeddings = token_embedding + positonal_embedding
 
 print(input_embeddings.shape)
+# print(input_embeddings)
 
 
 
