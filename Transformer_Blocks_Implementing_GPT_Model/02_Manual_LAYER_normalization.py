@@ -4,6 +4,7 @@ import torch.nn as nn
 
 torch.manual_seed(123)
 batch_example = torch.randn(2,5)
+# Linear layer we studied in previous multi head attention to use insetad of parameter for creating weight parameters
 layer = nn.Sequential(nn.Linear(5,6), nn.ReLU())
 out = layer(batch_example)
 print(out)
