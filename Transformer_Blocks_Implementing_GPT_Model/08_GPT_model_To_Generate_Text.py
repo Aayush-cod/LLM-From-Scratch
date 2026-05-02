@@ -146,6 +146,8 @@ GPT_CONFIG_124M = {
     "qkv_bias": False
 }
 
+# GPTModel or architecture combining all layers
+
 class GPTModel(nn.Module):
     def __init__(self, cfg):
         super().__init__()
