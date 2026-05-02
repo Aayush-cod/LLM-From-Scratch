@@ -186,7 +186,7 @@ batch.append(torch.tensor(tokenizer.encode(txt1)))
 batch.append(torch.tensor(tokenizer.encode(txt2)))
 
 batch = torch.stack(batch, dim = 0)
-print(batch)
+# print(batch)
 
 
 # intializing model
@@ -215,31 +215,31 @@ def generate_text_simple(model, idx, max_new_tokens, context_size):
 # at last predicted token id -> 6 as max_new_tokens iterates for loop for max 6 times , total token ids -> 10
     return idx
 
+if __name__ == "__main__":
+        start_context = "Hello, I am"
+        encoded = tokenizer.encode(start_context)
+        print("\nencoded: ", encoded)
+        # unsqueeze(0) adds batch size at 0 index [1,4]
+        encoded_tensor = torch.tensor(encoded).unsqueeze(0)
+        print("\nencoded-tensor.shape: ", encoded_tensor.shape)
 
-start_context = "Hello, I am"
-encoded = tokenizer.encode(start_context)
-print("\nencoded: ", encoded)
-# unsqueeze(0) adds batch size at 0 index [1,4]
-encoded_tensor = torch.tensor(encoded).unsqueeze(0)
-print("\nencoded-tensor.shape: ", encoded_tensor.shape)
+        # we put the model into .eval() mode, which disables random components like dropout, which are only used during training, and use the generate_text_simple function on the encoded input tensor
+        model.eval()
+        out = generate_text_simple(
+            model = model,
+            idx = encoded_tensor,
+            max_new_tokens=6,
+            context_size=GPT_CONFIG_124M["context_length"]
 
-# we put the model into .eval() mode, which disables random components like dropout, which are only used during training, and use the generate_text_simple function on the encoded input tensor
-model.eval()
-out = generate_text_simple(
-    model = model,
-    idx = encoded_tensor,
-    max_new_tokens=6,
-    context_size=GPT_CONFIG_124M["context_length"]
+        )
 
-)
+        print("\nOutput: ", out)
+        print("\nOutput length: ", len(out[0]))
 
-print("\nOutput: ", out)
-print("\nOutput length: ", len(out[0]))
-
-# Decoding token ids
-# squeeze(0) removes batch as [1,10] o position batch 
-decoded_text = tokenizer.decode(out.squeeze(0).tolist())
-print("\n",decoded_text)
+        # Decoding token ids
+        # squeeze(0) removes batch as [1,10] o position batch 
+        decoded_text = tokenizer.decode(out.squeeze(0).tolist())
+        print("\n",decoded_text)
 
 
 # Whats happens inside generate text function mainly after GPTModel calling - [1,4,50257]?
