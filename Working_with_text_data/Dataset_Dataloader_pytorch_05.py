@@ -60,31 +60,35 @@ with open("Working_with_text_data/the-verdict.txt", "r", encoding= "utf-8")as f:
     raw_txt = f.read()
 
 
-dataloader = create_dataloader_v1 ( 
-    raw_txt, batch_size=1, max_length=4 , stride= 1, shuffle = False )
 
-data_iter = iter(dataloader)
-
-first_batch = next(data_iter)
-
-# First batch of input target pairs
-print("Firstbatch:\n",first_batch)
+if __name__ == "__main__":
 
 
-second_batch = next(data_iter)
+        dataloader = create_dataloader_v1 ( 
+            raw_txt, batch_size=1, max_length=4 , stride= 1, shuffle = False )
 
-print("secondbatch:\n",second_batch)
+        data_iter = iter(dataloader)
 
-dataloader = create_dataloader_v1 ( 
-    raw_txt, batch_size=8, max_length=4 , stride= 4, shuffle = False )
+        first_batch = next(data_iter)
 
-data_iter = iter(dataloader)
-input, target = next(data_iter)
+        # First batch of input target pairs
+        print("Firstbatch:\n",first_batch)
 
-# 8 batch of input and tragets
 
-print("Input:\n", input)
-print("target:\n", target)
+        second_batch = next(data_iter)
+
+        print("secondbatch:\n",second_batch)
+
+        dataloader = create_dataloader_v1 ( 
+            raw_txt, batch_size=8, max_length=4 , stride= 4, shuffle = False )
+
+        data_iter = iter(dataloader)
+        input, target = next(data_iter)
+
+        # 8 batch of input and tragets
+
+        print("Input:\n", input)
+        print("target:\n", target)
 
 
 

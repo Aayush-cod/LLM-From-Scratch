@@ -60,3 +60,47 @@ with torch.no_grad():
 
         print(f"\n Targets batch1: ", token_ids_to_text(targets[0],tokenizer))
         print(f"\n Outputs batch1: ", token_ids_to_text(token_ids[0].flatten(),tokenizer))
+
+
+# Initial softmax probabilities scores corresponding to target tokens 
+text_idx = 0
+target_probas_1 = probas[text_idx, [0,1,2], targets[text_idx]]
+print("text 1: ", target_probas_1)
+
+text_idx = 1
+target_probas_2 = probas[text_idx, [0,1,2], targets[text_idx]]
+print("text 1: ", target_probas_2)
+
+
+# Calculating loss  manually log
+log_probas = torch.log(torch.cat((target_probas_1, target_probas_2)))
+print(log_probas)
+
+# calculateing avergae log
+avg_log_probas = torch.mean(log_probas)
+print(avg_log_probas)
+
+# turning negative log value to positive
+neg_avg_loss_probas = avg_log_probas * -1
+print(neg_avg_loss_probas)
+
+# Calculating loss using Pytorch's Cross entropy loss
+print("logits shape: ", logits.shape)
+print("target shape", targets.shape)
+
+
+# Flatten them by combinning over batch dimension
+
+logits_flatten = logits.flatten(0,1)
+targets_flatten = targets.flatten(0,1)
+print("Logits_flatten: ", logits_flatten.shape)
+print("target_flatten", targets_flatten.shape)
+
+# using cross entropy loss
+loss = torch.nn.functional.cross_entropy(logits_flatten, targets_flatten)
+print("\nloss: ",loss)
+
+
+
+
+
