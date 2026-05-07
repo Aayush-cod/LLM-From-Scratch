@@ -107,9 +107,12 @@ def calc_loss_loader(dataloader, model, device, num_batches = None):
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
-with torch.no_grad():
-    train_loss = calc_loss_loader(train_loader,model, device )
-    val_loss = calc_loss_loader(val_loader,model, device )
 
-    print("\nTraining Loss: ", train_loss)
-    print("\nValidation Loss: ", val_loss)
+if __name__ == "__main__":
+
+        with torch.no_grad():
+            train_loss = calc_loss_loader(train_loader,model, device )
+            val_loss = calc_loss_loader(val_loader,model, device )
+
+            print("\nTraining Loss: ", train_loss)
+            print("\nValidation Loss: ", val_loss)
