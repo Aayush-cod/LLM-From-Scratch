@@ -1,7 +1,7 @@
 import torch
 from Transformer_Blocks_Implementing_GPT_Model.GPT_model_To_Generate_Text_08 import GPTModel
 import tiktoken
-from PreTraining_On_UnLabeled_Data.Utility_function_for_text_toTokenId_conversion import token_ids_to_text
+from PreTraining_On_UnLabeled_Data.Utility_function_for_text_toTokenId_conversion_01 import token_ids_to_text
 
 # GPT Configuration Dictionary
 GPT_CONFIG_124M = {

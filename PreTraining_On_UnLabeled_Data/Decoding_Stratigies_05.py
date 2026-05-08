@@ -2,13 +2,13 @@ import torch
 import tiktoken 
 
 tokenizer = tiktoken.get_encoding("gpt2")
-from PreTraining_On_UnLabeled_Data.Utility_function_for_text_toTokenId_conversion import token_ids_to_text
-from PreTraining_On_UnLabeled_Data.Utility_function_for_text_toTokenId_conversion import text_to_token_ids
+from PreTraining_On_UnLabeled_Data.Utility_function_for_text_toTokenId_conversion_01 import token_ids_to_text
+from PreTraining_On_UnLabeled_Data.Utility_function_for_text_toTokenId_conversion_01 import text_to_token_ids
 from Transformer_Blocks_Implementing_GPT_Model.GPT_model_To_Generate_Text_08 import generate_text_simple
 
 
 from Transformer_Blocks_Implementing_GPT_Model.GPT_model_To_Generate_Text_08 import GPTModel
-from PreTraining_On_UnLabeled_Data.Training_An_LLM import GPT_CONFIG_124M
+from PreTraining_On_UnLabeled_Data.Training_An_LLM_04 import GPT_CONFIG_124M
 
 
 model = GPTModel(GPT_CONFIG_124M)
