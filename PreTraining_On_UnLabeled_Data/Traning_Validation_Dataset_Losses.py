@@ -25,8 +25,7 @@ with open("PreTraining_On_UnLabeled_Data/the-verdict.txt", "r", encoding= "utf-8
 
 total_characters = len(text_data)
 totel_tokens = len(tokenizer.encode(text_data))
-print("Characters: ", total_characters)
-print("tokens: ", totel_tokens)
+
 
 # Splitting into 90% tranning and 10% validation dataset
 
@@ -62,13 +61,7 @@ val_loader = create_dataloader_v1(
 # val_= next(val)
 # print("\nval loader: ",val_)
 
-print("\nTrain loader: ")
-for x, y in train_loader:
-    print(x.shape, y.shape)
 
-print("\nVal Loader: ")
-for x, y in val_loader:
-    print(x.shape, y.shape)
 
 
 # implement a utility function to calculate the cross entropy loss of a given batch returned via the training and validation loader:
@@ -109,6 +102,17 @@ model.to(device)
 
 
 if __name__ == "__main__":
+        
+        print("Characters: ", total_characters)
+        print("tokens: ", totel_tokens)
+        
+        print("\nTrain loader: ")
+        for x, y in train_loader:
+            print(x.shape, y.shape)
+
+        print("\nVal Loader: ")
+        for x, y in val_loader:
+            print(x.shape, y.shape)
 
         with torch.no_grad():
             train_loss = calc_loss_loader(train_loader,model, device )
