@@ -11,3 +11,11 @@ gpt2/
 # Python cache
 __pycache__/
 *.pyc
+
+# =========================
+# Datasets
+# =========================
+sms_spam_collection/
+*.zip
+*.csv
+*.tsv

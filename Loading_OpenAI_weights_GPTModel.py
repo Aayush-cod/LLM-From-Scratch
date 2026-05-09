@@ -135,7 +135,7 @@ print("✅ OpenAI weights loaded into GPTModel!")
 torch.manual_seed(123)
 token_ids = generate(
     model = gpt,
-    idx = text_to_token_ids("Every effort moves you", tokenizer),
+    idx = text_to_token_ids("He loves to", tokenizer),
     max_new_tokens=25,
     context_size= NEW_CONFIG["context_length"],
     top_k=50,
