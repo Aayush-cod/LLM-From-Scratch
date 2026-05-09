@@ -96,6 +96,13 @@ if __name__ == "__main__":
             start_context="Every effort moves you", tokenizer=tokenizer
         )
         # Save the trained weights
-        torch.save(model.state_dict(), "gpt_model.pth")
-        print("Model saved!")
+
+        # torch.save(model.state_dict(), "gpt_model.pth")
+        
+        torch.save({
+            "model_state_dict":model.state_dict(), 
+            "optimizer_state_dict": optimizer.state_dict(),
+            },
+            "model_and_optimizer.pth")
+        print("Model and optimizer saved!")
 

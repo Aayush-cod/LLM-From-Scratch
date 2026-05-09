@@ -1,2 +1,13 @@
 .vscode/
+
+# GPT-2 downloaded weights
+gpt2/
+
+# Model checkpoints
 *.pth
+*.ckpt
+*.meta
+*.index
+# Python cache
+__pycache__/
+*.pyc

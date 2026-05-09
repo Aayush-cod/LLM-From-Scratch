@@ -10,10 +10,13 @@ from Transformer_Blocks_Implementing_GPT_Model.GPT_model_To_Generate_Text_08 imp
 from PreTraining_On_UnLabeled_Data.Training_An_LLM_04 import GPT_CONFIG_124M
 
 
+checkpoint = torch.load("model_and_optimizer.pth")
+
 model = GPTModel(GPT_CONFIG_124M)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Load trained weights
-model.load_state_dict(torch.load("gpt_model.pth", map_location="cpu"))
+# model.load_state_dict(torch.load("gpt_model.pth", map_location="cpu"))
+model.load_state_dict(checkpoint["model_state_dict"])
 model.eval()
 
 # Modified Text generation function
@@ -50,21 +53,22 @@ def generate(model, idx, max_new_tokens, context_size,
 
     return idx
 
+if __name__ == "__main__":
 
-# initialize
-torch.manual_seed(123)
-token_ids = generate(
-    model = model,
-    idx = text_to_token_ids("Every effort moves you", tokenizer).to(device),
-    max_new_tokens=15,
-    context_size= GPT_CONFIG_124M["context_length"],
-    top_k=25,
-    temperature=1.4
+        # initialize
+        torch.manual_seed(123)
+        token_ids = generate(
+            model = model,
+            idx = text_to_token_ids("Every effort moves you", tokenizer).to(device),
+            max_new_tokens=15,
+            context_size= GPT_CONFIG_124M["context_length"],
+            top_k=25,
+            temperature=1.4
 
 
-)
+        )
 
-print("Output text: \n", token_ids_to_text(token_ids, tokenizer))
+        print("Output text: \n", token_ids_to_text(token_ids, tokenizer))
 
 
         
