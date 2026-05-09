@@ -4,7 +4,7 @@ import tiktoken
 import pandas as pd
 
 tokenizer = tiktoken.get_encoding("gpt2")
-print(tokenizer.encode("<|endoftext|>", allowed_special={"<|endoftext|>"}))
+
 
 # Dataset Class
 class SpamDataset(Dataset):
@@ -52,14 +52,15 @@ class SpamDataset(Dataset):
                 max_length = encoded_length
         return max_length
 
-# Initializing
-train_dataset = SpamDataset(
-    csv_file="train.csv",
-    max_length=None,
-    tokenizer=tokenizer
-)
 
-print(train_dataset.max_length)
+    # Initializing
+train_dataset = SpamDataset(
+        csv_file="train.csv",
+        max_length=None,
+        tokenizer=tokenizer
+    )
+
+
 
 val_dataset = SpamDataset(
     csv_file="validation.csv",
@@ -102,15 +103,20 @@ test_loader = DataLoader(
     drop_last=False,
 )
 
-print("Train loader:")
-for input_batch, target_batch in train_loader:
-    pass
+if __name__ == "__main__":
+    print(tokenizer.encode("<|endoftext|>", allowed_special={"<|endoftext|>"}))
 
-print("Input batch dimensions:", input_batch.shape)
-print("Label batch dimensions", target_batch.shape)
+    print(train_dataset.max_length)
 
-# let's print the total number of batches in each dataset
+    print("Train loader:")
+    for input_batch, target_batch in train_loader:
+        pass
 
-print(f"{len(train_loader)} training batches")
-print(f"{len(val_loader)} validation batches")
-print(f"{len(test_loader)} test batches")
+    print("Input batch dimensions:", input_batch.shape)
+    print("Label batch dimensions", target_batch.shape)
+
+    # let's print the total number of batches in each dataset
+
+    print(f"{len(train_loader)} training batches")
+    print(f"{len(val_loader)} validation batches")
+    print(f"{len(test_loader)} test batches")

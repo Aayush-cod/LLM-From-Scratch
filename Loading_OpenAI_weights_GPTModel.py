@@ -125,23 +125,23 @@ def load_weights_into_gpt(gpt, params):
     # Output head (weight tying)
     gpt.out_head.weight = assign(gpt.out_head.weight, params["wte"])
 
+if __name__ == "__main__":
+
+    load_weights_into_gpt(gpt, params)
+    print("✅ OpenAI weights loaded into GPTModel!")
 
 
-load_weights_into_gpt(gpt, params)
-print("✅ OpenAI weights loaded into GPTModel!")
+    # initialize
+    torch.manual_seed(123)
+    token_ids = generate(
+        model = gpt,
+        idx = text_to_token_ids("He loves to", tokenizer),
+        max_new_tokens=25,
+        context_size= NEW_CONFIG["context_length"],
+        top_k=50,
+        temperature=1.5
 
 
-# initialize
-torch.manual_seed(123)
-token_ids = generate(
-    model = gpt,
-    idx = text_to_token_ids("He loves to", tokenizer),
-    max_new_tokens=25,
-    context_size= NEW_CONFIG["context_length"],
-    top_k=50,
-    temperature=1.5
+    )
 
-
-)
-
-print("Output text: \n", token_ids_to_text(token_ids, tokenizer))
+    print("Output text: \n", token_ids_to_text(token_ids, tokenizer))
