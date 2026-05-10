@@ -19,3 +19,6 @@ sms_spam_collection/
 *.zip
 *.csv
 *.tsv
+
+# json data
+instruction-data.json
