@@ -6,6 +6,7 @@ from Finetuning_To_Follow_Instructions.Dataset_preparation import format_input
 from Finetuning_To_Follow_Instructions.Dataset_preparation import val_data
 import tiktoken
 tokenizer = tiktoken.get_encoding("gpt2")
+import os
 
 
 
@@ -58,6 +59,73 @@ print(generated_text)
 
 response_text = (
     generated_text[len(input_text):]
+    .replace("### Response:", "")
     .strip()
 )
 print(response_text)
+
+
+
+
+
+# ============================================================
+# 7.6 Finetuning the LLM on instruction data
+# ============================================================
+
+from PreTraining_On_UnLabeled_Data.Training_An_LLM_04 import train_model_simple
+from PreTraining_On_UnLabeled_Data.Traning_Validation_Dataset_Losses_03 import calc_loss_loader
+from Finetuning_To_Follow_Instructions.Dataloader import device
+from Finetuning_To_Follow_Instructions.Dataloader import train_loader
+from Finetuning_To_Follow_Instructions.Dataloader import val_loader
+from Finetuning_To_Follow_Instructions.Dataloader import test_loader
+
+model.to(device)
+
+# ✅ Path where finetuned model will be saved
+finetuned_model_path = f"instruction_finetuned_{model_size}.pth"
+
+if os.path.exists(finetuned_model_path):
+    print("✅ Finetuned model found. Loading weights...")
+    model.load_state_dict(torch.load(finetuned_model_path, map_location=device))
+    model.eval()
+
+else:
+    print("🚀 No finetuned model found. Starting instruction finetuning...")
+
+    torch.manual_seed(123)
+
+    with torch.no_grad():
+        train_loss = calc_loss_loader(train_loader, model, device, num_batches=5)
+        val_loss = calc_loss_loader(val_loader, model, device, num_batches=5)
+
+    print("Training loss before finetuning:", train_loss)
+    print("Validation loss before finetuning:", val_loss, "\n")
+
+    import time
+    start_time = time.time()
+
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.00005, weight_decay=0.1)
+
+    num_epochs = 2
+
+    train_losses, val_losses, tokens_seen = train_model_simple(
+        model,
+        train_loader,
+        val_loader,
+        optimizer,
+        device,
+        num_epochs=num_epochs,
+        eval_freq=5,
+        eval_iter=5,
+        start_context=format_input(val_data[0]),
+        tokenizer=tokenizer
+    )
+
+    end_time = time.time()
+    execution_time_minutes = (end_time - start_time) / 60
+
+    print(f"\nTraining completed in {execution_time_minutes:.2f} minutes.")
+
+    # ✅ Save finetuned model
+    torch.save(model.state_dict(), finetuned_model_path)
+    print("✅ Finetuned model saved.")
