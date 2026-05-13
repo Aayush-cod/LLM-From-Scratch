@@ -22,3 +22,5 @@ sms_spam_collection/
 
 # json data
 instruction-data.json
+instruction-data-with-response.json
+chat_sft_dataset.json
